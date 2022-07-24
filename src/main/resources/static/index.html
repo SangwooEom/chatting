@@ -4,6 +4,16 @@
 		<meta charset="UTF-8">
 		<title>메인</title>
 		<style>
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			
+			button {
+				padding: 5px 14px;
+				font-size: 18px;
+			}
+			
 			.main {
 				width: 1366px;
 				margin: 0 auto;
@@ -44,6 +54,57 @@
 			.bottom {
 				float: right;
 			}
+			
+			.overlay {
+				position: fixed;
+				display: none;
+				width: 100%;
+				height: 100%;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				background: rgba(0, 0, 0, 0.5);
+				z-index: 2;
+				cursor: pointer;
+			}
+			
+			.overlay .creation-popup {
+				position: fixed;
+				top: 150px;
+				left: calc(50% - 200px);
+				width: 400px;
+				background-color: #ffffff;
+				z-index: 4;
+				padding: 10px 5px;
+				
+				display: grid;
+				row-gap: 15px;
+			}
+			
+			.overlay .creation-popup h1 {
+				margin: 0 30px;
+				text-align: center;
+			}
+			
+			.overlay .creation-popup .item {
+				margin: 0 30px;
+				display: grid;
+				grid-template-columns: 40% 60%;
+				font-size: 18px;
+			}
+			
+			.overlay .creation-popup .item input[type=text] {
+				padding: 5px;
+				outline: none;
+			}
+			
+			.overlay .creation-popup .bottom {
+				margin: 0 30px;
+				display: grid;
+				grid-auto-flow: column;
+				column-gap: 10px;
+			}
 		</style>
 	</head>
 	<body>
@@ -80,7 +141,24 @@
 				</tbody>
 			</table>
 			<div class="bottom">
-				<button type="button">생성하기</button>
+				<button type="button" id="createPopupBtn">생성하기</button>
+			</div>
+		</div>
+		<div class="overlay">
+			<div class="creation-popup">
+				<h1>채팅방 생성</h1>
+				<div class="item">
+					<span>채팅방</span>
+					<input type="text" />
+				</div>
+				<div class="item">
+					<span>생성자</span>
+					<input type="text" />
+				</div>
+				<div class="bottom">
+					<button type="button" id="createBtn">생성하기</button>
+					<button type="button" class="cancelPopuu">취소하기</button>
+				</div>
 			</div>
 		</div>
 	</body>

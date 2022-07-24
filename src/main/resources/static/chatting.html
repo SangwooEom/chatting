@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Insert title here</title>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			
+			.main {
+				width: 1366px;
+				margin: 0 auto;
+			}
+			
+			.main .body {
+				display: grid;
+				column-gap: 10px;
+				grid-template-columns: calc(80% - 5px) calc(20% - 5px);
+				margin: 10px auto;
+				width: 1000px;
+				height: 700px;
+			}
+			
+			.main .body .content {
+				border: 1px solid #333333;
+			}
+			
+			.main .body .users {
+				border: 1px solid #333333;
+				padding: 5px;
+			}
+			
+			.main .input-box {
+				display: grid;
+				column-gap: 10px;
+				grid-template-columns: calc(80% - 5px) calc(20% - 5px);
+				margin: 5px auto;
+				width: 1000px
+			}
+		</style>
+		<script>
+			let NAME = "상우"
+			let INPUT_ELMT
+			let SEND_BTN_ELMT;
+			let CONTENT_ELMT;
+			let USERS_ELMT;
+
+			window.onload = function () {
+				INPUT_ELMT = document.querySelector(".input-box textarea");
+				SEND_BTN_ELMT = document.querySelector(".input-box button");
+				CONTENT_ELMT = document.querySelector(".body .content");
+				USERS_ELMT = document.querySelector(".body .users");
+			}
+
+			function onSendMessage() {
+				CONTENT_ELMT.innerHTML += `<p>${NAME}: ${INPUT_ELMT.value}</p>`;
+				INPUT_ELMT.value = "";
+			}
+		</script>
+	</head>
+	<body>
+		<div class="main">
+			<div class="body">
+				<div class="content"></div>
+				<div class="users">
+					<h3>사용자 목록</h3>
+				</div>
+			</div>
+			<div class="input-box">
+				<textarea></textarea>
+				<button type="button" onclick="onSendMessage()">전송</button>
+			</div>
+		</div>
+	</body>
+</html>

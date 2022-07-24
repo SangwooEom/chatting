@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>메인</title>
+		<style>
+			.main {
+				width: 1366px;
+				margin: 0 auto;
+			}
+			.title {
+				text-align: center;
+				margin-top: 50px;
+			}
+			
+			.chatting-room {
+				width: 100%;
+				border-collapse: collapse;
+				margin: 20px 0;
+			}
+			
+			.chatting-room thead tr {
+				border-top: 1px solid #333333;
+				border-bottom: 1px solid #333333;
+			}
+			
+			.chatting-room thead tr td {
+				text-align: center;
+				font-size: 18px;
+				font-weight: bold;
+				padding: 10px 5px;
+			}
+			
+			.chatting-room tbody tr {
+				border-bottom: 1px solid #333333;
+			}
+			
+			.chatting-room tr td {
+				text-align: center;
+				padding: 10px 5px;
+				font-size: 14px;
+			}
+			
+			.bottom {
+				float: right;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="main">
+			<h1 class="title">채팅</h1>
+			<table class="chatting-room">
+				<thead>
+					<tr>
+						<td>번호</td>
+						<td>채팅방</td>
+						<td>생성자</td>
+						<td>생성일</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>3</td>
+						<td>즐거운 채팅</td>
+						<td>관리자</td>
+						<td>2022-07-24</td>
+					</tr>
+					<tr>
+						<td>2</td>
+						<td>즐거운 채팅</td>
+						<td>관리자</td>
+						<td>2022-07-24</td>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td>즐거운 채팅</td>
+						<td>관리자</td>
+						<td>2022-07-24</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="bottom">
+				<button type="button">생성하기</button>
+			</div>
+		</div>
+	</body>
+</html>

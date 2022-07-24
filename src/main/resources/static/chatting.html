@@ -40,6 +40,8 @@
 				width: 1000px
 			}
 		</style>
+		<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 	</head>
 	<body>
 		<div class="main">
@@ -56,15 +58,45 @@
 		</div>
 	</body>
 	<script>
+		const SEQ = new URL(location.href).searchParams.get('seq');
 		const NAME = "상우"
 		const INPUT_ELMT = document.querySelector(".input-box textarea");
 		const SEND_BTN_ELMT = document.querySelector(".input-box button");
 		const CONTENT_ELMT = document.querySelector(".body .content");
 		const USERS_ELMT = document.querySelector(".body .users");
+		let stompClient = null;
+		
+		console.log(SEQ);
+		
+		function connect() {
+			const socket = new SockJS("/chatConnect");
+			stompClient = Stomp.over(socket);
+			stompClient.connect({}, (frame) => {
+				console.log(frame);
+				stompClient.subscribe('/chatResponse/' + SEQ, function(message) {
+					showContent(message);
+				})
+			})
+		}
+		
+		function disConnect() {
+			if (stompClient !== null) {
+				stompClient.disconnect();
+			}
+			
+			console.log("Disconnect");
+		}
 
 		function onSendMessage() {
-			CONTENT_ELMT.innerHTML += `<p>${NAME}: ${INPUT_ELMT.value}</p>`;
+			stompClient.send("/chat/request/" + SEQ, {}, `<p>${NAME}: ${INPUT_ELMT.value}</p>`);
 			INPUT_ELMT.value = "";
 		}
+		
+		function showContent(message) {
+			CONTENT_ELMT.innerHTML += message;
+			INPUT_ELMT.value = "";
+		}
+		
+		connect();
 	</script>
 </html>

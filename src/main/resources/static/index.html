@@ -13,6 +13,10 @@
 				padding: 5px 14px;
 				font-size: 18px;
 			}
+
+			.active {
+				display: block !important;
+			}
 			
 			.main {
 				width: 1366px;
@@ -106,6 +110,8 @@
 				column-gap: 10px;
 			}
 		</style>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 	</head>
 	<body>
 		<div class="main">
@@ -120,24 +126,6 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<td>3</td>
-						<td>즐거운 채팅</td>
-						<td>관리자</td>
-						<td>2022-07-24</td>
-					</tr>
-					<tr>
-						<td>2</td>
-						<td>즐거운 채팅</td>
-						<td>관리자</td>
-						<td>2022-07-24</td>
-					</tr>
-					<tr>
-						<td>1</td>
-						<td>즐거운 채팅</td>
-						<td>관리자</td>
-						<td>2022-07-24</td>
-					</tr>
 				</tbody>
 			</table>
 			<div class="bottom">
@@ -149,17 +137,80 @@
 				<h1>채팅방 생성</h1>
 				<div class="item">
 					<span>채팅방</span>
-					<input type="text" />
+					<input type="text" id="title"/>
 				</div>
 				<div class="item">
 					<span>생성자</span>
-					<input type="text" />
+					<input type="text" id="admin"/>
 				</div>
 				<div class="bottom">
 					<button type="button" id="createBtn">생성하기</button>
-					<button type="button" class="cancelPopuu">취소하기</button>
+					<button type="button" class="cancelPopup">취소하기</button>
 				</div>
 			</div>
 		</div>
 	</body>
+	<script>
+		const CHATTING_ROOMS = document.querySelector(".main .chatting-room tbody");
+		const CREATE_POPUP_BTN = document.getElementById("createPopupBtn");
+		const OVERLAY = document.querySelector(".overlay");
+		const CREATE_POPUP = document.querySelector(".overlay .creation-popup");
+		const CREATE_BTN = document.getElementById("createBtn");
+		const CANCEL_BTN = document.querySelector(".cancelPopup");
+		const TITLE_INPUT = document.getElementById("title");
+		const ADMIN_INPUT = document.getElementById("admin");
+		
+		async function initList() {
+			const { data } = await axios.get("http://localhost:8080/chattingRoom/list");
+			CHATTING_ROOMS.innerHTML = '';
+			
+			for (const item of data) {
+				CHATTING_ROOMS.innerHTML += ChattingRoomComponent(item);
+			}
+		}
+		
+		function ChattingRoomComponent(item) {
+			return `<tr>
+				<td>${item.seq}</td>
+				<td><a href="http://localhost:8080/chatting.html?seq=${item.seq}">${item.title}</a></td>
+				<td>${item.admin}</td>
+				<td>${moment(item.createDate).format("YYYY-MM-DD")}</td>
+			</tr>`;
+		}
+		
+		async function addChattingRoom() {
+			const createDate = new Date();
+			
+			await axios.post("http://localhost:8080/chattingRoom/add", {
+				title: TITLE_INPUT.value,
+				admin: ADMIN_INPUT.value,
+				createDate
+			});
+			
+			cancelCreatePopup();
+			initList();
+		}
+
+		function showCreatePopup() {
+			OVERLAY.classList.add("active");
+			CREATE_POPUP.classList.add("active");
+		}
+		
+		function cancelCreatePopup() {
+			initCreatePopup();
+			OVERLAY.classList.remove("active");
+			CREATE_POPUP.classList.remove("active");
+		}
+		
+		function initCreatePopup() {
+			TITLE_INPUT.value = '';
+			ADMIN_INPUT.value = '';
+		}
+		
+		CREATE_POPUP_BTN.addEventListener('click', showCreatePopup)
+		CREATE_BTN.addEventListener('click', addChattingRoom);
+		CANCEL_BTN.addEventListener('click', cancelCreatePopup);
+		
+		initList();
+	</script>
 </html>

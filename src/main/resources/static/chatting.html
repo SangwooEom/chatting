@@ -40,25 +40,6 @@
 				width: 1000px
 			}
 		</style>
-		<script>
-			let NAME = "상우"
-			let INPUT_ELMT
-			let SEND_BTN_ELMT;
-			let CONTENT_ELMT;
-			let USERS_ELMT;
-
-			window.onload = function () {
-				INPUT_ELMT = document.querySelector(".input-box textarea");
-				SEND_BTN_ELMT = document.querySelector(".input-box button");
-				CONTENT_ELMT = document.querySelector(".body .content");
-				USERS_ELMT = document.querySelector(".body .users");
-			}
-
-			function onSendMessage() {
-				CONTENT_ELMT.innerHTML += `<p>${NAME}: ${INPUT_ELMT.value}</p>`;
-				INPUT_ELMT.value = "";
-			}
-		</script>
 	</head>
 	<body>
 		<div class="main">
@@ -74,4 +55,16 @@
 			</div>
 		</div>
 	</body>
+	<script>
+		const NAME = "상우"
+		const INPUT_ELMT = document.querySelector(".input-box textarea");
+		const SEND_BTN_ELMT = document.querySelector(".input-box button");
+		const CONTENT_ELMT = document.querySelector(".body .content");
+		const USERS_ELMT = document.querySelector(".body .users");
+
+		function onSendMessage() {
+			CONTENT_ELMT.innerHTML += `<p>${NAME}: ${INPUT_ELMT.value}</p>`;
+			INPUT_ELMT.value = "";
+		}
+	</script>
 </html>
